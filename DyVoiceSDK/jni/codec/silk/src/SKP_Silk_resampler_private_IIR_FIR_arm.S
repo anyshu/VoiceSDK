@@ -44,7 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF tmp3, r3
 	VARDEF tmp4, ip
 	VARDEF out, sl
-
+ALIGN 4
 .set	sp_max_i, 0 
 .set	sp_inc, 4 
 
@@ -63,6 +63,8 @@ SYM(SKP_Silk_resampler_private_IIR_FIR_INTERPOL):
 	add		tmp3, tmp3, #0xFF
 L(0)
 	ldr		tmp1, TABLE(L0, =SKP_Silk_resampler_frac_FIR_144_alt)
+L(PIEC0)
+	ldr		tmp1, [pc, tmp1]
 	and		tmp3, ind, tmp3
 	mov		tmp2, #144
 	mov		tmp4, ind, asr #16
@@ -110,6 +112,10 @@ L(1)
 	ldmia	sp!,  {r4-r10, fp, ip, pc}
 
 L(L0)
+	DCD	(PIED0)-8-(PIEC0)
+
+DATA
+L(PIED0)
 	DCD	SYM(SKP_Silk_resampler_frac_FIR_144_alt)
 	END
 #endif

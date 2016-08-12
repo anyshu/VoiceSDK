@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF Y2, sb
 	VARDEF outk1, sl
 	VARDEF outk2, ip
-
+ALIGN 4
 .globl	SYM(SKP_Silk_allpass_int)
 SYM(SKP_Silk_allpass_int):
 	stmdb	sp!,  {r4-r10, fp, ip, lr}
@@ -57,7 +57,7 @@ L(0)
 	subs		len, len, #2
 	sub			Y2, ink2, S00
 	smlawt		outk2, Y2, A, ink2
-#ifdef _WINRT
+#if defined(_WINRT) || defined(__llvm__)
 	ble			LR(3, f)
 	ldmia		r0!, {ink1,ink2}
 L(3)	
@@ -92,7 +92,7 @@ L(1)/*AgeZero:*/
 	subs		len, len, #2
 	sub			Y2, ink2, S00
 	smlawt		outk2, Y2, A, S00
-#ifdef _WINRT
+#if defined(_WINRT) || defined(__llvm__)
 	ble			LR(3, f)
 	ldmia		r0!, {ink1,ink2}
 L(3)

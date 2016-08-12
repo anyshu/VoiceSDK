@@ -37,7 +37,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #if EMBEDDED_ARM<5
 /* Variable order MA prediction error filter */
-void SKP_Silk_MA_Prediction(
+void SKP_Silk_MA_Prediction_c(
     const SKP_int16      *in,            /* I:   Input signal                                */
     const SKP_int16      *B,             /* I:   MA prediction coefficients, Q12 [order]     */
     SKP_int32            *S,             /* I/O: State vector [order]                        */

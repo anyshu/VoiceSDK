@@ -49,7 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF ret1, r1
 	VARDEF state_QS0, r2
 	VARDEF warping_Q16, r3
-
+ALIGN 4
 .set	sp_state_QS, 0 
 .set	sp_corr_QS, 68 
 .set	sp_corr_ptr, 204 

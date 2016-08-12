@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*        * only when len>6, memory access can be reduced by half.              */
 
 #if (EMBEDDED_ARM<5) 
-SKP_int32 SKP_Silk_inner_prod_aligned(
+SKP_int32 SKP_Silk_inner_prod_aligned_c(
     const SKP_int16* const inVec1,  /*    I input vector 1    */
     const SKP_int16* const inVec2,  /*    I input vector 2    */
     const SKP_int             len   /*    I vector lengths    */
@@ -57,7 +57,7 @@ SKP_int32 SKP_Silk_inner_prod_aligned(
 #endif
 
 #if (EMBEDDED_ARM<5) 
-SKP_int64 SKP_Silk_inner_prod16_aligned_64(
+SKP_int64 SKP_Silk_inner_prod16_aligned_64_c(
     const SKP_int16 *inVec1,        /*    I input vector 1    */ 
     const SKP_int16 *inVec2,        /*    I input vector 2    */
     const SKP_int   len             /*    I vector lengths    */

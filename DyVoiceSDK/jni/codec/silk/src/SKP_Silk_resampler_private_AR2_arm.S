@@ -38,7 +38,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF	out32, r8
 	VARDEF	A_Q140, sb
 	VARDEF	A_Q141, sl
-
+ALIGN 4
 .set	sp_S, 0 
 .globl	SYM(SKP_Silk_resampler_private_AR2)
 SYM(SKP_Silk_resampler_private_AR2):

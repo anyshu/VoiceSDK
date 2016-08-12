@@ -54,7 +54,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF out1, sl
 	VARDEF out2, ip
 	VARDEF out, lr
-
+ALIGN 4
 .globl	SYM(SKP_Silk_resampler_private_up2_HQ)
 SYM(SKP_Silk_resampler_private_up2_HQ):
 	stmdb	sp!,  {r4-r10, fp, ip, lr}

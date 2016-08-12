@@ -41,25 +41,25 @@ extern "C"
 #include "SKP_Silk_resampler_structs.h"
 
 #ifndef NO_ASM
-#	if defined (__ARM_ARCH_4__) || defined (__ARM_ARCH_4T__) || defined (__ARM_ARCH_5__) || defined (__ARM_ARCH_5T__)
-#		define EMBEDDED_ARM 4
-#		define EMBEDDED_ARMv4
-#		include "SKP_Silk_macros_arm.h"
-#	elif defined (__ARM_ARCH_5TE__) || defined (__ARM_ARCH_5TEJ__)
-#		define EMBEDDED_ARM 5
-#		define EMBEDDED_ARMv5
-#		include "SKP_Silk_macros_arm.h"	
-#	elif defined (__ARM_ARCH_6__) ||defined (__ARM_ARCH_6J__) || defined (__ARM_ARCH_6Z__) || defined (__ARM_ARCH_6K__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6T2__)
-#		define EMBEDDED_ARM 6
-#		define EMBEDDED_ARMv6
-#		include "SKP_Silk_macros_arm.h"
-#	elif defined (__ARM_ARCH_7A__) && defined (__ARM_NEON__)
+#	if ( defined (__ARM_ARCH_7A__) || defined (__ARM_ARCH_7S__) || defined (__ARM_ARCH_7__)) && defined (__ARM_NEON__)
 #		define EMBEDDED_ARM 7
 #		define EMBEDDED_ARMv6
 #		include "SKP_Silk_macros_arm.h"
 #	elif defined (__ARM_ARCH_7A__)
 #		define EMBEDDED_ARM 6
 #		define EMBEDDED_ARMv6
+#		include "SKP_Silk_macros_arm.h"
+#	elif defined (__ARM_ARCH_6__) ||defined (__ARM_ARCH_6J__) || defined (__ARM_ARCH_6Z__) || defined (__ARM_ARCH_6K__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6T2__)
+#		define EMBEDDED_ARM 6
+#		define EMBEDDED_ARMv6
+#		include "SKP_Silk_macros_arm.h"
+#	elif defined (__ARM_ARCH_5TE__) || defined (__ARM_ARCH_5TEJ__)
+#		define EMBEDDED_ARM 5
+#		define EMBEDDED_ARMv5
+#		include "SKP_Silk_macros_arm.h"
+#	elif defined (__ARM_ARCH_4__) || defined (__ARM_ARCH_4T__) || defined (__ARM_ARCH_5__) || defined (__ARM_ARCH_5T__)
+#		define EMBEDDED_ARM 4
+#		define EMBEDDED_ARMv4
 #		include "SKP_Silk_macros_arm.h"
 #	else
 #		include "SKP_Silk_macros.h"
@@ -171,7 +171,7 @@ void SKP_Silk_biquad_alt(
 /*! 
  * variable order MA filter. Prediction error filter implementation. Coeficients negated and starting with coef to x[n - 1]
  */
-void SKP_Silk_MA_Prediction(
+typedef void SKP_Silk_MA_Prediction_prototype(
     const SKP_int16      *in,          /* I:   Input signal                                */
     const SKP_int16      *B,           /* I:   MA prediction coefficients, Q12 [order]     */
     SKP_int32            *S,           /* I/O: State vector [order]                        */
@@ -179,6 +179,8 @@ void SKP_Silk_MA_Prediction(
     const SKP_int32      len,          /* I:   Signal length                               */
     const SKP_int32      order         /* I:   Filter order                                */
 );
+
+extern SKP_Silk_MA_Prediction_prototype* SKP_Silk_MA_Prediction;
 
 /*!
  * 16th order AR filter for LPC synthesis, coefficients are in Q12
@@ -449,17 +451,22 @@ void SKP_Silk_scale_vector32_Q26_lshift_18(
 
 /*    return sum(inVec1[i]*inVec2[i])    */
 /*    inVec1 and inVec2 should be increasing ordered, and starting address should be 4 byte aligned. (a factor of 4)*/
-SKP_int32 SKP_Silk_inner_prod_aligned(
+typedef SKP_int32 SKP_Silk_inner_prod_aligned_prototype(
     const SKP_int16* const inVec1,           /* I   input vector 1    */ 
     const SKP_int16* const inVec2,           /* I   input vector 2    */
     const SKP_int          len               /* I   vector lengths    */
 );
 
-SKP_int64 SKP_Silk_inner_prod16_aligned_64(
+extern SKP_Silk_inner_prod_aligned_prototype* SKP_Silk_inner_prod_aligned;
+
+typedef SKP_int64 SKP_Silk_inner_prod16_aligned_64_prototype(
     const SKP_int16        *inVec1,          /* I   input vector 1    */
     const SKP_int16        *inVec2,          /* I   input vector 2    */
     const SKP_int          len               /* I   vector lengths    */
 );
+
+extern SKP_Silk_inner_prod16_aligned_64_prototype* SKP_Silk_inner_prod16_aligned_64;
+
 /********************************************************************/
 /*                                MACROS                            */
 /********************************************************************/

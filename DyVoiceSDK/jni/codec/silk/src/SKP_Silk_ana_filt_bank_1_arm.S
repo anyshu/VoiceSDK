@@ -69,6 +69,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF out_tmpha, r0
 	VARDEF out_tmphb, _r7
 
+ALIGN 4
 .set	halfN, 0 
 .set	sp_ptr_out_lo, 4 
 .set	sp_ptr_out_hi, 8 
@@ -148,7 +149,7 @@ L(1)
 	mov		out_tmphb,  out_tmphb, asr #11
 	strh	out_tmplb,  [ptr_out_lo], #2
 	strh	out_tmphb,  [ptr_out_hi], #2
-#ifdef _WINRT
+#if defined(_WINRT) || defined(__llvm__)
 	cmp		out_tmpla,  val_const2
 	ble		LR(2, f)
 	strh	val_const3, [ptr_out_lo, #-2]

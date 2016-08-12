@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF val_mul_ret, r0
 	VARDEF val_add_ret, r3
 	VARDEF const1, r1
-
+ALIGN 4
 .globl	SYM(SKP_Silk_lin2log)
 SYM(SKP_Silk_lin2log):
 	stmdb	sp!,  {r4-r5, fp, ip, lr}
@@ -84,7 +84,7 @@ L(1)
 	VARDEF tmp0, r4
 	VARDEF const1, r2
 	VARDEF val_ret, r0
-
+ALIGN 4
 .globl	SYM(SKP_Silk_lin2log)
 SYM(SKP_Silk_lin2log):
 	stmdb	sp!,  {r4-r5, fp, ip, lr}

@@ -49,7 +49,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF tmpptr, sl
 	VARDEF tmp0, ip
 	VARDEF tmp1, lr
-
+ALIGN 4
 .set	sp_buf, 0 
 .set	sp_maxi, 4 
 .globl	SYM(SKP_Silk_resampler_private_down_FIR_INTERPOL0)

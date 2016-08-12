@@ -41,7 +41,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF in0, sb
 	VARDEF in1, sl
 	VARDEF out32, r0
-
+ALIGN 4
 .set	sp_S, 0 
 .globl	SYM(SKP_Silk_resampler_down2)
 SYM(SKP_Silk_resampler_down2):

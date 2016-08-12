@@ -48,9 +48,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "SKP_Silk_AsmHelper.h"
 
+#ifdef MACOSX
+#define NO_ASM
+#endif
 
 /* Checking compilier __ARMEL__ defines */
-#if !__ARMEL__ && (!defined(NO_ASM)) && (!defined(_WINRT))
+#if !__ARMEL__ && (!defined(NO_ASM)) && (!defined(_WINRT)) && (!defined(__llvm__))
 #error	Currently SKP_Silk_AsmPreProc only supports little endian.
 // above line can be replaced by 
 // #warning	__ARMEL__=0
@@ -90,21 +93,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /* Legacy definition wrapper */
 #ifndef	NO_ASM
-#if defined (__ARM_ARCH_4__) || defined (__ARM_ARCH_4T__) || defined (__ARM_ARCH_5__) || defined (__ARM_ARCH_5T__)
-#define EMBEDDED_ARM 4
-#define EMBEDDED_ARMv4
-#elif  defined (__ARM_ARCH_5TE__) || defined (__ARM_ARCH_5TEJ__)
-#define EMBEDDED_ARM 5
-#define EMBEDDED_ARMv5
-#elif defined (__ARM_ARCH_6__) ||defined (__ARM_ARCH_6J__) || defined (__ARM_ARCH_6Z__) || defined (__ARM_ARCH_6K__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6T2__)
-#define EMBEDDED_ARM 6
-#define EMBEDDED_ARMv6
-#elif defined (__ARM_ARCH_7A__) && defined (__ARM_NEON__)
+#if (defined (__ARM_ARCH_7A__) || defined (__ARM_ARCH_7S__) || defined (__ARM_ARCH_7__)) && defined (__ARM_NEON__)
 #define EMBEDDED_ARM 7
 #define EMBEDDED_ARMv6
 #elif defined (__ARM_ARCH_7A__)
 #define EMBEDDED_ARM 6
 #define EMBEDDED_ARMv6
+#elif defined (__ARM_ARCH_6__) ||defined (__ARM_ARCH_6J__) || defined (__ARM_ARCH_6Z__) || defined (__ARM_ARCH_6K__) || defined(__ARM_ARCH_6ZK__) || defined(__ARM_ARCH_6T2__)
+#define EMBEDDED_ARM 6
+#define EMBEDDED_ARMv6
+#elif  defined (__ARM_ARCH_5TE__) || defined (__ARM_ARCH_5TEJ__)
+#define EMBEDDED_ARM 5
+#define EMBEDDED_ARMv5
+#elif defined (__ARM_ARCH_4__) || defined (__ARM_ARCH_4T__) || defined (__ARM_ARCH_5__) || defined (__ARM_ARCH_5T__)
+#define EMBEDDED_ARM 4
+#define EMBEDDED_ARMv4
 #endif
 #endif
 
@@ -121,7 +124,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define TABLE(L, symbol) L
 #endif
 
-#ifdef _WINRT
+
+#if defined(_WINRT) || defined(__llvm__)
 #define streqh strheq
 #define strneh strhne
 #define strgth strhgt

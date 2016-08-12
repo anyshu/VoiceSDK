@@ -84,7 +84,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #if defined (_WINRT)
 #else
-#if defined (IPHONE)
+#if defined (IPHONE) && !(__llvm__)
 #define MACRO			.macro
 #define END_MACRO		.endmacro
 #define ARG0_in	

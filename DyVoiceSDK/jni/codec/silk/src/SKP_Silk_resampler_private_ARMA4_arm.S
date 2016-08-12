@@ -44,7 +44,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF coef6, r8
 	VARDEF coef_tmp, _r7
 	VARDEF out2, lr
-
+ALIGN 4
 .set	sp_S, 0 
 .set	sp_coef, 4 
 .globl	SYM(SKP_Silk_resampler_private_ARMA4)

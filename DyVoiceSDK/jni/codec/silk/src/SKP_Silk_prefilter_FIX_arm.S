@@ -46,7 +46,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF val_order, ip
 	VARDEF val_length, lr
 
-
+ALIGN 4
 .set	sp_state_ptr, 0 
 .set	sp_res_ptr, 4 
 .set	sp_coef_Q13_ptr, 8 

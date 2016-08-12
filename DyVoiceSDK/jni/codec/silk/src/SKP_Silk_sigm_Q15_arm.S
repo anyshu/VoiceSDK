@@ -37,14 +37,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF val_slope, r5
 	VARDEF val_PUT, r4
 	VARDEF in_Q5_tmp, r3
-
+ALIGN 4
 .globl	SYM(SKP_Silk_sigm_Q15)
 SYM(SKP_Silk_sigm_Q15):
 	stmdb	sp!,  {r4-r7, fp, ip, lr}
 	add		fp, sp, #24
 	cmp		r0, #0
 	ldr		ptr_slope, TABLE(L0, =SKP_Silk_sigm_tab)
-
+L(PIEC0)
+	ldr 	ptr_slope, [pc, ptr_slope]
 	mov		in_Q5, r0
 	rsblt	in_Q5, r0, #0
 	mov		r0, #32768
@@ -64,10 +65,14 @@ SYM(SKP_Silk_sigm_Q15):
 L(1)	
 	ldmia	sp!,  {r4-r7, fp, ip, pc}
 	
-L(L0)		
-	DCD	SYM(SKP_Silk_sigm_tab)
+L(L0)
+	DCD	(PIED0)-8-(PIEC0)
 
-	SKP_TABLE SKP_Silk_sigm_tab, 2
+DATA
+L(PIED0)		
+	DCD	SYM(SKP_Silk_sigm_tab)
+    
+SYM(SKP_Silk_sigm_tab):
 	DCW		237, 153, 73, 30, 12, 7,						\
 			16384, 23955, 28861, 31213, 32178, 32548,		\
 			-237, -153, -73, -30, -12, -7,					\

@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	/*DATA*/
 
 	ALIGN 4
-	SKP_TABLE SKP_Silk_resampler_frac_FIR_144_alt, 2
+SYM(SKP_Silk_resampler_frac_FIR_144_alt):
 	DCW		 -647,	  1884,	 30078,	  2207,	  -851,	   73,	\
 			 -625,	  1736,	 30044,	  2409,	  -901,	   81,	\
 			 -603,	  1591,	 30005,	  2614,	  -952,	   89,	\

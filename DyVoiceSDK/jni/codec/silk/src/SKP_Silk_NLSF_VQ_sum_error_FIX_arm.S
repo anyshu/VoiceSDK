@@ -52,7 +52,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	VARDEF ptr_in_Q15, r1
 	VARDEF ptr_w_Q6, r2
 	VARDEF ptr_pCB_Q15, r3
-
+ALIGN 4
 .set	sp_wtmp, 0 
 .set	sp_err_Q20, 32 
 .set	sp_in_Q15, 36 
