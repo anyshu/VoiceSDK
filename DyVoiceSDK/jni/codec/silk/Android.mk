@@ -166,4 +166,6 @@ ifeq ($(TARGET_ARCH_ABI), armeabi)
 LOCAL_CFLAGS += -D__ARM_ARCH_5TE__
 endif
 
+LOCAL_CFLAGS += -DANDROID -O3
+
 include $(BUILD_STATIC_LIBRARY)
