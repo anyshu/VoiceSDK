@@ -130,10 +130,8 @@ src/SKP_Silk_array_maxabs_arm.S \
 src/SKP_Silk_clz_arm.S \
 src/SKP_Silk_decode_core_arm.S \
 src/SKP_Silk_inner_prod_aligned_arm_arm5.S \
-src/SKP_Silk_inner_prod_aligned_arm_neon.S \
 src/SKP_Silk_lin2log_arm.S \
 src/SKP_Silk_MA_arm_arm5.S \
-src/SKP_Silk_MA_arm_neon.S \
 src/SKP_Silk_NLSF_VQ_sum_error_FIX_arm.S \
 src/SKP_Silk_prefilter_FIX_arm.S \
 src/SKP_Silk_resampler_down2_arm.S \
@@ -152,7 +150,7 @@ src/SKP_Silk_warped_autocorrelation_FIX_arm.S \
 endif
 
 ifeq ($(TARGET_ARCH), x86)
-LOCAL_CFLAGS += $(ATOM_COMPLIER_OPT)
+LOCAL_CFLAGS += $(ATOM_COMPILER_OPT)
 endif
 
 ifeq ($(TARGET_ARCH), arm)
@@ -163,6 +161,9 @@ endif
 ifeq ($(TARGET_ARCH_ABI), armeabi-v7a)
 LOCAL_CFLAGS += -DHAVE_NEON=1 -mfpu=neon
 LOCAL_CFLAGS += -D__ARM_ARCH_7A__ -D__ARM_NEON__
+
+LOCAL_SRC_FILES += src/SKP_Silk_inner_prod_aligned_arm_neon.S \
+				   src/SKP_Silk_MA_arm_neon.S
 endif
 
 ifeq ($(TARGET_ARCH_ABI), armeabi)
