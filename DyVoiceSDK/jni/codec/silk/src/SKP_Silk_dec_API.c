@@ -229,6 +229,8 @@ void SKP_Silk_SDK_get_TOC(
     SKP_Silk_decoder_control    sDecCtrl;
     SKP_int TempQ[ MAX_FRAME_LENGTH ];
 
+	SKP_memset(&sDec, 0, sizeof(SKP_Silk_decoder_state));
+
     sDec.nFramesDecoded = 0;
     sDec.fs_kHz         = 0; /* Force update parameters LPC_order etc */
     SKP_Silk_range_dec_init( &sDec.sRC, inData, ( SKP_int32 )nBytesIn );

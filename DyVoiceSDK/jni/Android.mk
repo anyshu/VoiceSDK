@@ -19,7 +19,7 @@ LOCAL_SRC_FILES := jniwrapper/com_duoyi_dyvoicesdk_api_DyVoiceAPI.cpp \
 				   codec/silk/silk_codec.cpp
 
 LOCAL_LDLIBS += -llog
-LOCAL_CFLAGS += -fPIC
+#LOCAL_CFLAGS += -fPIC
 
 include $(BUILD_SHARED_LIBRARY)
 

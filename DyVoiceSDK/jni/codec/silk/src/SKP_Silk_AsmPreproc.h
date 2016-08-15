@@ -53,7 +53,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 /* Checking compilier __ARMEL__ defines */
-#if !__ARMEL__ && (!defined(NO_ASM)) && (!defined(_WINRT)) && (!defined(__llvm__))
+// #if !__ARMEL__ && (!defined(NO_ASM)) && (!defined(_WINRT)) && (!defined(__llvm__)) /* Ryan : change to make it equal to  project*/
+#if !__ARMEL__ && (!defined(NO_ASM)) && (!defined(_WINRT))
 #error	Currently SKP_Silk_AsmPreProc only supports little endian.
 // above line can be replaced by 
 // #warning	__ARMEL__=0
@@ -93,7 +94,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 /* Legacy definition wrapper */
 #ifndef	NO_ASM
-#if (defined (__ARM_ARCH_7A__) || defined (__ARM_ARCH_7S__) || defined (__ARM_ARCH_7__)) && defined (__ARM_NEON__)
+//#if (defined (__ARM_ARCH_7A__) || defined (__ARM_ARCH_7S__) || defined (__ARM_ARCH_7__)) && defined (__ARM_NEON__)
+#if defined (__ARM_ARCH_7A__) && defined (__ARM_NEON__)
 #define EMBEDDED_ARM 7
 #define EMBEDDED_ARMv6
 #elif defined (__ARM_ARCH_7A__)

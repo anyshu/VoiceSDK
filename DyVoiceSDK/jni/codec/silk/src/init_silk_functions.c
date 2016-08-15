@@ -1,4 +1,6 @@
 #include "SKP_Silk_SigProc_FIX.h"
+#include <cpu-features.h>
+#include <android/log.h>
 
 extern SKP_int32 SKP_Silk_inner_prod_aligned_neon(const SKP_int16* const, const SKP_int16* const, const SKP_int);
 extern SKP_int32 SKP_Silk_inner_prod_aligned_arm5(const SKP_int16* const, const SKP_int16* const, const SKP_int);
@@ -16,9 +18,8 @@ SKP_Silk_inner_prod_aligned_prototype* SKP_Silk_inner_prod_aligned = NULL;
 SKP_Silk_inner_prod16_aligned_64_prototype* SKP_Silk_inner_prod16_aligned_64 = NULL;
 SKP_Silk_MA_Prediction_prototype* SKP_Silk_MA_Prediction = NULL;
 
-extern int g_IsNeonSupport;
-
 void init_silk_functions() {
+	SKP_int32 g_IsNeonSupport = 0;
 #ifdef HAVE_NEON
 	if(g_IsNeonSupport) {
 		SKP_Silk_inner_prod_aligned = SKP_Silk_inner_prod_aligned_neon;

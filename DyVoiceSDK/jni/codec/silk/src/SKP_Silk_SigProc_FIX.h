@@ -41,7 +41,8 @@ extern "C"
 #include "SKP_Silk_resampler_structs.h"
 
 #ifndef NO_ASM
-#	if ( defined (__ARM_ARCH_7A__) || defined (__ARM_ARCH_7S__) || defined (__ARM_ARCH_7__)) && defined (__ARM_NEON__)
+// #	if ( defined (__ARM_ARCH_7A__) || defined (__ARM_ARCH_7S__) || defined (__ARM_ARCH_7__)) && defined (__ARM_NEON__) /*Ryan : make it equal to project*/
+#	if defined (__ARM_ARCH_7A__) && defined (__ARM_NEON__)
 #		define EMBEDDED_ARM 7
 #		define EMBEDDED_ARMv6
 #		include "SKP_Silk_macros_arm.h"
