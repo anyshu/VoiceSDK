@@ -25,6 +25,11 @@ public class DyVoiceAPI {
 		return stopCall();
 	}
 	
+	public int setCodecParameter(int codecId, int sampleRate, int bitRate, int maxInternalSampleRate, boolean useFEC,
+			boolean dtx, int complexity) {
+		return setParameter(codecId, sampleRate, bitRate, maxInternalSampleRate, useFEC, dtx, complexity);
+	}
+
 	// TEST
 	public int encodeTest() {
 		return encode();
@@ -33,5 +38,4 @@ public class DyVoiceAPI {
 	public int decodeTest() {
 		return decode();
 	}
-	
 }

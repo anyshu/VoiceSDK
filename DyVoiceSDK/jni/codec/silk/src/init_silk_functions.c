@@ -20,8 +20,17 @@ SKP_Silk_MA_Prediction_prototype* SKP_Silk_MA_Prediction = NULL;
 
 void init_silk_functions() {
 	SKP_int32 g_IsNeonSupport = 0;
+	if (android_getCpuFamily() == ANDROID_CPU_FAMILY_ARM
+			&& (android_getCpuFeatures() & ANDROID_CPU_ARM_FEATURE_NEON) != 0) {
+		g_IsNeonSupport = 1;
+		__android_log_print(ANDROID_LOG_INFO, "DYVOICE", "device support NEON");
+	} else {
+		g_IsNeonSupport = 0;
+		__android_log_print(ANDROID_LOG_INFO, "DYVOICE", "device don't support NEON");
+	}
+
 #ifdef HAVE_NEON
-	if(g_IsNeonSupport) {
+	if(g_IsNeonSupport == 1) {
 		SKP_Silk_inner_prod_aligned = SKP_Silk_inner_prod_aligned_neon;
 		SKP_Silk_inner_prod16_aligned_64 = SKP_Silk_inner_prod16_aligned_64_neon;
 		SKP_Silk_MA_Prediction = SKP_Silk_MA_Prediction_neon;

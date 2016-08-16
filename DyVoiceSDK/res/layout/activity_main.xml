@@ -4,29 +4,89 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/input_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/txt_codecid" />
+
+        <Spinner
+            android:id="@+id/spinner_codecId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/txt_samplerate" />
+
+        <Spinner
+            android:id="@+id/spinner_sampleRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/txt_bitrate" />
+
+        <EditText
+            android:id="@+id/et_bitrate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:singleLine="true"
+            android:text="@string/input_text_bitrate"
+            android:textSize="@dimen/input_text_size" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/top_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:orientation="horizontal"
-        >
-        <Button 
+        android:layout_height="wrap_content"
+        android:layout_below="@id/input_linearlayout"
+        android:orientation="horizontal" >
+
+        <Button
             android:id="@+id/btn_start"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/btn_start"/>
+            android:text="@string/btn_start" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/btn_stop" />
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_below="@id/top_linearlayout"
-        >
-        <Button 
+        android:orientation="horizontal" >
+
+        <Button
             android:id="@+id/btn_encode"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/btn_start"/>
+            android:text="@string/btn_encode" />
+
+        <Button
+            android:id="@+id/btn_decode"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/btn_decode" />
     </LinearLayout>
-    
+
 </RelativeLayout>

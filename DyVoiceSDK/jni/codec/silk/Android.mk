@@ -9,6 +9,7 @@ SILK_SOURCE_PATH := $(AUDIO_SOURCE)/src
 LOCAL_C_INCLUDES := \
     $(AUDIO_SOURCE)/interface \
     $(AUDIO_SOURCE)/src \
+    $(AUDIO_SOURCE)/../../utils
 
 LOCAL_SRC_FILES := \
     src/SKP_Silk_A2NLSF.c \

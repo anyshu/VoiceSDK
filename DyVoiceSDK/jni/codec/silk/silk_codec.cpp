@@ -17,33 +17,19 @@
 SilkCodec::SilkCodec() {
 	nBytes = MAX_BYTES_PER_FRAME * MAX_INPUT_FRAMES;
 
-	API_fs_Hz = 24000;
-	max_internal_fs_Hz = 0;
-	targetRate_bps = 25000;
-	smplsSinceLastPacket = 20;
-	packetSize_ms = 20;
-	frameSizeReadFromFile_ms = 20;
-	packetLoss_perc = 0;
-
-#if LOW_COMPLEXITY_ONLY
-	complexity_mode = 0;
+	/* Set Default Encoder parameters */
+	encControl.API_sampleRate = 16000;
+	encControl.maxInternalSampleRate = encControl.API_sampleRate;
+	encControl.packetSize = (20 * encControl.API_sampleRate) / 1000;
+	encControl.packetLossPercentage = 0;
+	encControl.useInBandFEC = 0;
+	encControl.useDTX = 0;
+#ifdef LOW_COMPLEXITY_ONLY
+	encControl.complexity = 0;
 #else
-	complexity_mode = 1;
+	encControl.complexity = 1;
 #endif
-
-	DTX_enabled = 0;
-	INBandFEC_enabled = 0;
-	quiet = 0;
-
-	/* Set Encoder parameters */
-	encControl.API_sampleRate = API_fs_Hz;
-	encControl.maxInternalSampleRate = max_internal_fs_Hz;
-	encControl.packetSize = (packetSize_ms * API_fs_Hz) / 1000;
-	encControl.packetLossPercentage = packetLoss_perc;
-	encControl.useInBandFEC = INBandFEC_enabled;
-	encControl.useDTX = DTX_enabled;
-	encControl.complexity = complexity_mode;
-	encControl.bitRate = (targetRate_bps > 0 ? targetRate_bps : 0);
+	encControl.bitRate = 30000;
 
 	SKP_int32 encSizeBytes;
 	SKP_Silk_SDK_Get_Encoder_Size(&encSizeBytes);
@@ -58,24 +44,28 @@ void SilkCodec::setParameter(P_CodecParameter parameter) {
 	SKP_int32 ret = -1;
 	/* Reset Encoder */
 	ret = SKP_Silk_SDK_InitEncoder(psEnc, &encStatus);
-	if (ret) {
-		LOGE("SKP_Silk_SDK_InitEncoder ret = %d", ret);
-	}
+	LOGI("SKP_Silk_SDK_InitEncoder ret = %d", ret);
 	/* Set Encoder parameters */
 	encControl.API_sampleRate = parameter->sampleRate;
-	encControl.maxInternalSampleRate = max_internal_fs_Hz;
-	encControl.packetSize = (packetSize_ms * API_fs_Hz) / 1000;
-	encControl.packetLossPercentage = packetLoss_perc;
-	encControl.useInBandFEC = INBandFEC_enabled;
-	encControl.useDTX = DTX_enabled;
-	encControl.complexity = complexity_mode;
+	encControl.maxInternalSampleRate = parameter->sampleRate;
+	encControl.packetSize = (parameter->ptime * encControl.API_sampleRate) / 1000;
 	encControl.bitRate = (parameter->bitRate > 0 ? parameter->bitRate : 0);
 
+	LOGI("SILK parameter samplerate = %d, maxInternalSampleRate = %d, packetSize = %d, packetLossPercentage = %d, FEC = %d, dtx = %d, complexity = %d, bitRate = %d",
+			encControl.API_sampleRate,
+			encControl.maxInternalSampleRate,
+			encControl.packetSize,
+			encControl.packetLossPercentage,
+			encControl.useInBandFEC,
+			encControl.useDTX,
+			encControl.complexity,
+			encControl.bitRate);
 }
 
 int SilkCodec::encode(void* inData, short dataLen, void* outData) {
-	SKP_int32 ret = -1;
+	SKP_int32 ret = 0;
 	ret = SKP_Silk_SDK_Encode(psEnc, &encControl, (short*) inData, (SKP_int16) dataLen, (unsigned char*) outData, &nBytes);
+	LOGE("Silk encode ret = %d, dataLen = %d, nBytes = %d", ret, dataLen, nBytes);
 	return ret;
 }
 

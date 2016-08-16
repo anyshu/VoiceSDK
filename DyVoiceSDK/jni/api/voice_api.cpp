@@ -13,17 +13,18 @@ VoiceApi::VoiceApi() {
 	m_voiceCodec = NULL;
 	parameter.bitRate = 0;
 	parameter.sampleRate = 0;
+	parameter.ptime = 0;
 
 	// TEST
 	m_in_file = NULL;
 	m_bitOut_file = NULL;
 	m_out_file = NULL;
 
-	char in_name[250] = "/sdcard/orginal_1.pcm";
+	char in_name[250] = "/sdcard/dyvoicedemo/original.pcm";
 	strcpy(m_in_file_name, in_name);
-	char bitOut_name[250] = "/sdcard/orginal_1";
+	char bitOut_name[250] = "/sdcard/dyvoicedemo/original";
 	strcpy(m_bitOut_file_name, bitOut_name);
-	char out_name[250] = "/sdcard/orginal_1_out.pcm";
+	char out_name[250] = "/sdcard/dyvoicedemo/original_out.pcm";
 	strcpy(m_out_file_name, out_name);
 }
 
@@ -50,6 +51,7 @@ void VoiceApi::setParameter(int codecId,
 		m_voiceCodec = new SilkCodec();
 		parameter.sampleRate = sampleRate;
 		parameter.bitRate = bitRate;
+		parameter.ptime = 20;
 		P_CodecParameter p_parameter = &parameter;
 		m_voiceCodec->setParameter(p_parameter);
 	}
@@ -65,6 +67,7 @@ int VoiceApi::startCall() {
 
 int VoiceApi::stopCall() {
 	if(m_voiceCodec != NULL) {
+		LOGI("DisContruct VoiceApi");
 		delete m_voiceCodec;
 		m_voiceCodec = NULL;
 	}
@@ -76,7 +79,8 @@ int VoiceApi::encode() {
 	short counter = 0;
 	short in[4800];
 	unsigned char payload[1250];
-	int frameSizeReadFromFile = 20, ret = 0;
+	int packetSizeInShort;
+	int ret = 0;
 	if (m_in_file == NULL) {
 		m_in_file = fopen(m_in_file_name, "rb");
 		if (m_in_file == NULL) {
@@ -92,27 +96,30 @@ int VoiceApi::encode() {
 		}
 	}
 
-	while(1) {
-		counter = fread(in, sizeof(unsigned short), (frameSizeReadFromFile * parameter.sampleRate) / 1000, m_in_file);
-		if (counter < ((frameSizeReadFromFile * parameter.sampleRate) / 1000)) {
-			break;
+	packetSizeInShort = (parameter.ptime * parameter.sampleRate) / 1000;
+
+	while (1) {
+		counter = fread(in, sizeof(unsigned short), packetSizeInShort>>2, m_in_file);
+		if (counter < (packetSizeInShort>>2)) {
 			LOGI("Read file to the end");
+			break;
 		}
 		if (m_voiceCodec != NULL) {
 			ret = m_voiceCodec->encode(in, counter, payload);
-			if (ret) {
-				LOGI("encode file ret = %d", ret);
-			}
 		}
 
 		fwrite(payload, sizeof(unsigned char), sizeof(payload), m_bitOut_file);
 	}
 
 	if (m_in_file != NULL) {
+		LOGI("Close m_in_file");
 		fclose(m_in_file);
+		m_in_file = NULL;
 	}
 	if (m_bitOut_file != NULL) {
+		LOGI("Close m_out_file");
 		fclose(m_bitOut_file);
+		m_bitOut_file = NULL;
 	}
 	return 0;
 }

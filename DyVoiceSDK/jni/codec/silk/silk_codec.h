@@ -22,21 +22,6 @@ public:
 private:
 	SKP_int16 nBytes;
 
-	/* default settings */
-	SKP_int32 API_fs_Hz;
-	SKP_int32 max_internal_fs_Hz;
-	SKP_int32 targetRate_bps;
-	SKP_int32 smplsSinceLastPacket;
-	SKP_int32 packetSize_ms;
-	SKP_int32 frameSizeReadFromFile_ms;
-	SKP_int32 packetLoss_perc;
-
-	SKP_int32 complexity_mode;
-
-	SKP_int32 DTX_enabled;
-	SKP_int32 INBandFEC_enabled;
-	SKP_int32 quiet;
-
     SKP_SILK_SDK_EncControlStruct encControl; // Struct for input to encoder
     SKP_SILK_SDK_EncControlStruct encStatus;  // Struct for status of encoder
 

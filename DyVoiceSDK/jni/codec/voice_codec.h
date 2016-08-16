@@ -12,6 +12,7 @@ typedef struct
 {
 	int sampleRate;
 	int bitRate;
+	int ptime;
 }CodecParameter, *P_CodecParameter;
 
 class VoiceCodec

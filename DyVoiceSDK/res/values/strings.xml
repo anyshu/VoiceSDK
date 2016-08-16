@@ -4,5 +4,19 @@
     <string name="app_name">DyVoiceSDK</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- text string -->
+    <string name="txt_codecid">编解码器:</string>
+    <string name="txt_samplerate">采样率Hz:</string>
+    <string name="txt_bitrate">码率:</string>
+
+    <!-- input value string -->
+    <string name="input_text_bitrate">30000</string>
+
+    <!-- button string -->
     <string name="btn_start">开始</string>
+    <string name="btn_stop">停止</string>
+    <string name="btn_encode">编码测试</string>
+    <string name="btn_decode">解码测试</string>
+
 </resources>
