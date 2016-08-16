@@ -16,16 +16,17 @@ public:
 	SilkCodec();
 	~SilkCodec();
 	void setParameter(P_CodecParameter parameter);
-	int encode(void* inData, short dataLen, void* outData);
-	int decode(void* inData, short dataLen, void* outData);
+	int encode(void* inData, short inLen, void* outData, int& outLen);
+	int decode(void* inData, short inLen, void* outData, int& outLen);
 
 private:
 	SKP_int16 nBytes;
 
     SKP_SILK_SDK_EncControlStruct encControl; // Struct for input to encoder
-    SKP_SILK_SDK_EncControlStruct encStatus;  // Struct for status of encoder
+    SKP_SILK_SDK_DecControlStruct decControl;  // Struct for status of encoder
 
-    void *psEnc;
+    void *enc_status;
+    void *dec_status;
 };
 
 #endif /* CODEC_SILK_SILK_CODEC_H_ */

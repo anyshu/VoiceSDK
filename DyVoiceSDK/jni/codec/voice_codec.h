@@ -20,8 +20,8 @@ class VoiceCodec
 public:
 	virtual ~VoiceCodec() {};
 	virtual void setParameter(P_CodecParameter parameter) = 0;
-	virtual int encode(void* inData, short dataLen, void* outData) = 0;
-	virtual int decode(void* inData, short dataLen, void* outData) = 0;
+	virtual int encode(void* inData, short inLen, void* outData, int& outLen) = 0;
+	virtual int decode(void* inData, short inLen, void* outData, int& outLen) = 0;
 };
 
 #endif /* CODEC_SILK_VOICE_CODEC_H_ */

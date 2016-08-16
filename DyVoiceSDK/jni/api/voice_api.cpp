@@ -76,9 +76,11 @@ int VoiceApi::stopCall() {
 
 // TEST
 int VoiceApi::encode() {
-	short counter = 0;
-	short in[4800];
+	short sampleLen = 0;
+	int payloadLen = 0, decode_payloadLen = 0;
+	short sample[4800];
 	unsigned char payload[1250];
+	unsigned char decode_payload[1250];
 	int packetSizeInShort;
 	int ret = 0;
 	if (m_in_file == NULL) {
@@ -95,21 +97,37 @@ int VoiceApi::encode() {
 			return -1;
 		}
 	}
+	if (m_out_file == NULL) {
+		m_out_file = fopen(m_out_file_name, "wb");
+		if (m_out_file == NULL) {
+			LOGE("m_out_file == NULL");
+			return -1;
+		}
+	}
 
 	packetSizeInShort = (parameter.ptime * parameter.sampleRate) / 1000;
 	LOGD("packetSizeInShort = %d", packetSizeInShort);
 
 	while (1) {
-		counter = fread(in, sizeof(unsigned short), packetSizeInShort, m_in_file);
-		if (counter < (packetSizeInShort)) {
+		sampleLen = fread(sample, sizeof(unsigned short), packetSizeInShort, m_in_file);
+		if (sampleLen < (packetSizeInShort)) {
 			LOGI("Read file to the end");
 			break;
 		}
 		if (m_voiceCodec != NULL) {
-			ret = m_voiceCodec->encode(in, counter, payload);
+			ret = m_voiceCodec->encode(sample, sampleLen, payload, payloadLen);
+			if (ret < 0) {
+				LOGE("Encode error");
+			}
+			ret = m_voiceCodec->decode(payload, payloadLen, decode_payload, decode_payloadLen);
+			if (ret < 0) {
+				LOGE("Decode error");
+			} else {
+				fwrite(decode_payload, sizeof(unsigned short), decode_payloadLen, m_out_file);
+			}
 		}
 
-		fwrite(payload, sizeof(unsigned char), sizeof(payload), m_bitOut_file);
+		fwrite(payload, sizeof(unsigned char), payloadLen, m_bitOut_file);
 	}
 
 	if (m_in_file != NULL) {
@@ -122,6 +140,11 @@ int VoiceApi::encode() {
 		fclose(m_bitOut_file);
 		m_bitOut_file = NULL;
 	}
+	if (m_out_file != NULL) {
+			LOGI("Close m_out_file");
+			fclose(m_out_file);
+			m_out_file = NULL;
+		}
 	return 0;
 }
 
