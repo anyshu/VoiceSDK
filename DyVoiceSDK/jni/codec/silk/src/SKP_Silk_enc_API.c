@@ -32,7 +32,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "SKP_Silk_control.h"
 #include "SKP_Silk_typedef.h"
 #include "SKP_Silk_structs.h"
-#include "dyutils.h"
 
 #define SKP_Silk_EncodeControlStruct SKP_SILK_SDK_EncControlStruct
 

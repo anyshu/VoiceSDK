@@ -14,7 +14,11 @@
 #define FRAME_LENGTH_MS         20
 #define MAX_API_FS_KHZ          48
 
+extern "C" void init_silk_functions();
+
 SilkCodec::SilkCodec() {
+	init_silk_functions();
+
 	nBytes = MAX_BYTES_PER_FRAME * MAX_INPUT_FRAMES;
 
 	/* Set Default Encoder parameters */
@@ -32,8 +36,10 @@ SilkCodec::SilkCodec() {
 	encControl.bitRate = 30000;
 
 	SKP_int32 encSizeBytes;
-	SKP_Silk_SDK_Get_Encoder_Size(&encSizeBytes);
+	int ret = SKP_Silk_SDK_Get_Encoder_Size(&encSizeBytes);
 	psEnc = malloc(encSizeBytes);
+	memset(psEnc, 0, encSizeBytes);
+	LOGI("SILK Get_Encoder_Size ret = %d", ret);
 }
 
 SilkCodec::~SilkCodec() {
@@ -50,6 +56,9 @@ void SilkCodec::setParameter(P_CodecParameter parameter) {
 	encControl.maxInternalSampleRate = parameter->sampleRate;
 	encControl.packetSize = (parameter->ptime * encControl.API_sampleRate) / 1000;
 	encControl.bitRate = (parameter->bitRate > 0 ? parameter->bitRate : 0);
+	encControl.packetLossPercentage = 10;
+	encControl.useInBandFEC = 1;
+	encControl.complexity = 2;
 
 	LOGI("SILK parameter samplerate = %d, maxInternalSampleRate = %d, packetSize = %d, packetLossPercentage = %d, FEC = %d, dtx = %d, complexity = %d, bitRate = %d",
 			encControl.API_sampleRate,
@@ -64,6 +73,8 @@ void SilkCodec::setParameter(P_CodecParameter parameter) {
 
 int SilkCodec::encode(void* inData, short dataLen, void* outData) {
 	SKP_int32 ret = 0;
+	// TODO : use dynamic value instead of fixed value
+	nBytes = 900;
 	ret = SKP_Silk_SDK_Encode(psEnc, &encControl, (short*) inData, (SKP_int16) dataLen, (unsigned char*) outData, &nBytes);
 	LOGI("Silk encode ret = %d, dataLen = %d, nBytes = %d", ret, dataLen, nBytes);
 	return ret;

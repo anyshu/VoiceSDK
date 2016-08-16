@@ -11,7 +11,7 @@
     <string name="txt_bitrate">码率:</string>
 
     <!-- input value string -->
-    <string name="input_text_bitrate">30000</string>
+    <string name="input_text_bitrate">36000</string>
 
     <!-- button string -->
     <string name="btn_start">开始</string>

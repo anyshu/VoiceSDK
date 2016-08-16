@@ -25,6 +25,7 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ***********************************************************************/
 
+#include "dyutils.h"
 #ifndef _SKP_SILK_API_TYPDEF_H_
 #define _SKP_SILK_API_TYPDEF_H_
 
