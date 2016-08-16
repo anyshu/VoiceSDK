@@ -97,10 +97,11 @@ int VoiceApi::encode() {
 	}
 
 	packetSizeInShort = (parameter.ptime * parameter.sampleRate) / 1000;
+	LOGD("packetSizeInShort = %d", packetSizeInShort);
 
 	while (1) {
-		counter = fread(in, sizeof(unsigned short), packetSizeInShort>>2, m_in_file);
-		if (counter < (packetSizeInShort>>2)) {
+		counter = fread(in, sizeof(unsigned short), packetSizeInShort, m_in_file);
+		if (counter < (packetSizeInShort)) {
 			LOGI("Read file to the end");
 			break;
 		}

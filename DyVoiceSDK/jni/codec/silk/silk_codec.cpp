@@ -43,7 +43,7 @@ SilkCodec::~SilkCodec() {
 void SilkCodec::setParameter(P_CodecParameter parameter) {
 	SKP_int32 ret = -1;
 	/* Reset Encoder */
-	ret = SKP_Silk_SDK_InitEncoder(psEnc, &encStatus);
+	ret = SKP_Silk_SDK_InitEncoder(psEnc, &encControl);
 	LOGI("SKP_Silk_SDK_InitEncoder ret = %d", ret);
 	/* Set Encoder parameters */
 	encControl.API_sampleRate = parameter->sampleRate;
@@ -65,7 +65,7 @@ void SilkCodec::setParameter(P_CodecParameter parameter) {
 int SilkCodec::encode(void* inData, short dataLen, void* outData) {
 	SKP_int32 ret = 0;
 	ret = SKP_Silk_SDK_Encode(psEnc, &encControl, (short*) inData, (SKP_int16) dataLen, (unsigned char*) outData, &nBytes);
-	LOGE("Silk encode ret = %d, dataLen = %d, nBytes = %d", ret, dataLen, nBytes);
+	LOGI("Silk encode ret = %d, dataLen = %d, nBytes = %d", ret, dataLen, nBytes);
 	return ret;
 }
 
