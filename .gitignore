@@ -55,6 +55,7 @@ Desktop.ini
 bin/
 gen/
 out/
+obj/
 
 # Gradle files
 .gradle/
